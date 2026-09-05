@@ -2,7 +2,7 @@
 [workspace]
 # 拆分出子 crate（如 crates/core、crates/cli）时在这里登记，
 # 它们即可继承下面的 [workspace.package] / [workspace.dependencies] / [workspace.lints]。
-members = []
+members = ["crates/macros-derive"]
 resolver = "3"
 
 # --- 供所有成员继承的公共元数据 -------------------------------------------
@@ -30,7 +30,7 @@ repository.workspace = true
 authors.workspace = true
 # keywords = ["cli"]                        # crates.io 的搜索关键词，最多 5 个
 # categories = ["command-line-utilities"]   # 取值见 https://crates.io/categories
-# publish = false                           # 禁止发布到 crates.io
+publish = false # 禁止发布到 crates.io
 
 # 打包发布时排除掉只对开发有意义的文件
 exclude = [
@@ -92,6 +92,10 @@ thiserror = "2"
 # thiserror 用来定义领域错误类型
 anyhow = "1"
 # anyhow 只给应用层用，见 src/main.rs
+proc-macro2 = "1"
+syn = { version = "3", features = ["extra-traits"] }
+quote = "1"
+macros-derive = { path = "crates/macros-derive" }
 
 [dependencies]
 # 本 crate 的运行时依赖写在这一段（到下一个 [ ] 表头为止）
@@ -104,6 +108,7 @@ thiserror = { workspace = true }
 # 领域错误类型见 src/error.rs
 anyhow = { workspace = true }
 # main 用它收口，配合 .context() 补充上下文
+macros-derive = { workspace = true }
 
 [dev-dependencies]
 # 只在测试 / benchmark / example 里用到的依赖，不会进使用者的依赖树

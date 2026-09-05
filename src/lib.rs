@@ -2,6 +2,8 @@
 //!
 //! 库目标：存放业务逻辑，供 `src/main.rs` 与 `tests/` 调用。
 
+mod decl;
+pub mod enum_from;
 mod error;
 
 pub use crate::error::{Error, Result};
